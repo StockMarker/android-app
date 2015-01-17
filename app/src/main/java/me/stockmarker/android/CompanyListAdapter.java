@@ -48,6 +48,10 @@ public class CompanyListAdapter extends BaseAdapter {
         return data.remove(co);
     }
 
+    public ArrayList<Company> getCompanyList() {
+        return data;
+    }
+
     @Override
     public int getCount() {
         return data.size();

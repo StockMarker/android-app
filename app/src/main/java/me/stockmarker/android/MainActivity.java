@@ -1,6 +1,7 @@
 package me.stockmarker.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -52,7 +53,11 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), cl.get(position).getDescription(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), cl.get(position).getDescription(), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, CompanyDetailActivity.class);
+                i.putParcelableArrayListExtra("list", cl.getCompanyList());
+                i.putExtra("selected", position);
+                startActivity(i);
             }
         });
 
