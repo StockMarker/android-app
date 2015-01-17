@@ -1,12 +1,18 @@
 package me.stockmarker.android;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -29,12 +35,29 @@ public class MainActivity extends ActionBarActivity {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private CompanyListAdapter cl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         restoreActionBar();
+
+        cl = new CompanyListAdapter(this);
+
+        ListView lv = (ListView) findViewById(R.id.company_list);
+        lv.setAdapter(cl);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), cl.get(position).getDescription(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        cl.add(new Company("lol", "haha", new Date()));
+        cl.add(new Company("lulz", "u w0t m8", new Date()));
     }
 
     public void restoreActionBar() {
