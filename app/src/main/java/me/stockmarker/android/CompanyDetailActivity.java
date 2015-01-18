@@ -12,9 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import me.stockmarker.android.R;
 
@@ -63,16 +66,14 @@ public class CompanyDetailActivity extends ActionBarActivity {
         ListView lv = (ListView) findViewById(R.id.company_stuff);
         lv.setAdapter(cdla);
         
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                APIHelper.printJSON(APIHelper.getEndpoint("/companies"), 0);
-            }
-        });
-        
-        cdla.put("Name", cur.getName());
-        cdla.put("Descr", cur.getDescription());
-        cdla.put("Date", cur.getDate().toString());
+        cdla.put("Company", cur.getName());
+        cdla.put("Ticker", cur.getTicker());
+
+        HashMap<String, String> otherData = cur.getOtherData();
+
+        for (String key : otherData.keySet()) {
+            cdla.put(key, otherData.get(key));
+        }
     }
 
 

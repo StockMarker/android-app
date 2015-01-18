@@ -13,7 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -60,8 +66,39 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        cl.add(new Company("lol", "haha", new Date()));
-        cl.add(new Company("lulz", "u w0t m8", new Date()));
+        APIHelper.JSONRetrieverTask jrt = new APIHelper.JSONRetrieverTask();
+        jrt.addRunner(new APIHelper.JSONExecutor() {
+            @Override
+            public void processJSON(JSONObject obj) {
+                try {
+                    JSONArray companies = (JSONArray) obj.get("companies");
+                    for (int i = 0; i < companies.length(); i++) {
+                        JSONObject comp = (JSONObject) companies.get(i);
+                        
+                        Company com = new Company((String) comp.get("Company"),
+                                (String) comp.get("Ticker"));
+
+                        Iterator<String> keys = comp.keys();
+                        do {
+                            try {
+                                String curKey = keys.next();
+                                Object next = comp.get(curKey);
+                                if (!curKey.equals("Company") || !curKey.equals("Ticker")) {
+                                    com.addData(curKey, (String) next);
+                                }
+                            } catch (Exception e) {
+
+                            }
+                        } while (keys.hasNext());
+
+                        cl.add(com);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        jrt.execute("/companies");
     }
 
     public void restoreActionBar() {

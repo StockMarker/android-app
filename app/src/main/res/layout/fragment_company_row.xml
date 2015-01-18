@@ -20,7 +20,7 @@
             android:textSize="18dp" />
 
         <TextView
-            android:id="@+id/company_description"
+            android:id="@+id/company_ticker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="3dip"
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/company_date"
+        android:id="@+id/company_subindustry"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

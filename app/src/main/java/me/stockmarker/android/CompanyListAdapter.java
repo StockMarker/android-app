@@ -79,22 +79,22 @@ public class CompanyListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.fragment_company_row, null);
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.company_name);
-            holder.date = (TextView) convertView.findViewById(R.id.company_date);
-            holder.descr = (TextView) convertView.findViewById(R.id.company_description);
+            holder.ticker = (TextView) convertView.findViewById(R.id.company_ticker);
+            holder.sub = (TextView) convertView.findViewById(R.id.company_subindustry);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         holder.name.setText(co.getName());
-        holder.date.setText(co.getDate().toString());
-        holder.descr.setText(co.getDescription());
+        holder.ticker.setText(co.getTicker());
+        holder.sub.setText(co.getData("Sub-Industry"));
 
 
         return convertView;
     }
 
     private class ViewHolder {
-        TextView name, date, descr;
+        TextView name, ticker, sub;
     }
 }
