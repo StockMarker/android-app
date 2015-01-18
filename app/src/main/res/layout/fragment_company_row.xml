@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="9dip">
+        android:paddingLeft="16dp">
 
         <TextView
             android:id="@+id/company_name"
@@ -35,7 +35,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="right"
         android:paddingBottom="3dip"
-        android:paddingRight="9dip"
+        android:paddingRight="16dp"
         android:paddingTop="3dip"
         android:text="@string/default_text"
         android:textSize="14dp" />

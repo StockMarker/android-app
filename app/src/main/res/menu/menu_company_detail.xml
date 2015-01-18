@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="me.stockmarker.android.CompanyDetailActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_ebay_buy" android:title="@string/action_ebay_buy"
+        android:orderInCategory="100" app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_ebay_sell" android:title="@string/action_ebay_sell"
+        android:orderInCategory="200" app:showAsAction="ifRoom" />
 </menu>

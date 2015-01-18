@@ -1,11 +1,18 @@
 package me.stockmarker.android;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -14,11 +21,16 @@ import me.stockmarker.android.R;
 public class CompanyDetailActivity extends ActionBarActivity {
     private ArrayList<Company> companyList = new ArrayList<>();
     private int selected = -1;
+    private Company cur;
+    
+    private CompanyDetailListAdapter cdla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_detail);
+
+        restoreActionBar();
 
         Intent i = getIntent();
         if (i != null) {
@@ -26,13 +38,41 @@ public class CompanyDetailActivity extends ActionBarActivity {
         }
     }
 
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         companyList = intent.getParcelableArrayListExtra("list");
         selected = intent.getIntExtra("selected", -1);
+        cur = companyList.get(selected);
+        
+        getSupportActionBar().setTitle(cur.getName());
+        
+        cdla = new CompanyDetailListAdapter(this);
 
-        TextView tv = (TextView) findViewById(R.id.company_stuff);
-        tv.setText(companyList.get(selected).toString());
+        ListView lv = (ListView) findViewById(R.id.company_stuff);
+        lv.setAdapter(cdla);
+        
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                APIHelper.printJSON(APIHelper.getEndpoint("/companies"), 0);
+            }
+        });
+        
+        cdla.put("Name", cur.getName());
+        cdla.put("Descr", cur.getDescription());
+        cdla.put("Date", cur.getDate().toString());
     }
 
 
