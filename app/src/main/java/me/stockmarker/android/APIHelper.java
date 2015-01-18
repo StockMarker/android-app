@@ -121,7 +121,7 @@ public class APIHelper {
         String out = "";
         for (int i = 0; i < level; i++) out += delim;
         out += str;
-        Log.e("LOGSHIT", out);
+        Log.e("APIHelper", out);
     }
     
     public static void printJSON(JSONObject arr, int level) {
